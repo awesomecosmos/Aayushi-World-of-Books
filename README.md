@@ -12,3 +12,9 @@ Descriptive statistics and analytics of my book obsession.
 - Avg. and Total books read in a selected time range
 - number of books read over time (line and bar)
 - number of books read over time by genre/other filter
+
+## possible Metadata APIs
+- https://developers.google.com/books/
+- https://openlibrary.org/developers/api
+- http://bms.bowker.com/help/
+  
