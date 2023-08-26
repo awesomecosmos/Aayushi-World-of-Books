@@ -1,6 +1,9 @@
 import pandas as pd
+import streamlit as st
 # import matplotlib.pyplot as plt
 
+# IMPORTANT: Cache the conversion to prevent computation on every rerun
+@st.cache_data
 def read_books(filename):
     """
     Function to read an Excel file of Simplified format
@@ -17,6 +20,8 @@ def read_books(filename):
     df['fiction_status'] = df['fiction_status'].fillna('fiction')
     return df
 
+# IMPORTANT: Cache the conversion to prevent computation on every rerun
+@st.cache_data
 def transform_goodreads_output(raw):
     """
     Function to transform Goodreads export to Simplified format.
