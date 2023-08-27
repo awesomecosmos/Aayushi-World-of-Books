@@ -44,3 +44,21 @@ def transform_goodreads_output(raw):
                axis=1)
     raw = raw.drop_duplicates()
     return raw
+
+def isbn_request(isbn):
+    return f'https://openlibrary.org/isbn/{isbn}.json'
+
+def extract_json(json_result, cols):
+    for col in cols:
+        try:
+            info = json_result[col]
+        except:
+            print(f"Warning: '{col}' is an invalid key.")
+    return info
+
+def insert_info_into_dict(my_dict, key_name, json_result, cols):
+    try:
+        my_dict[key_name] = extract_json(json_result, cols)
+    except:
+        my_dict[key_name] = np.nan
+    return my_dict
