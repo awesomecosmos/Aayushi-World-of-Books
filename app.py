@@ -35,7 +35,7 @@ with tab1:
     metadata about books I own physically, digitally, and which I've borrowed.
     '''
     st.markdown(motivation)
-    img1 = '/Users/aayushiverma/Documents/Github/My-Book-Stats/assets/interstellar.jpeg'
+    img1 = 'assets/interstellar.jpeg'
     img1_caption = 'One of my motivations is Murph\'s bookshelf in Interstellar (2014), which played a key role in the movie and kind of saved the universe. I don\'t think my bookshelf can do that, but one can dream.'
     st.image(img1, caption=img1_caption)
     
