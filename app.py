@@ -72,13 +72,3 @@ with tab2:
 with tab3:
     df = read_books('data/simplified_book_list.xlsx')
     st.dataframe(filter_dataframe(df))  
-
-
-
-
-# total num of pages per year divided by 365 = avg pages read per year
-# make trend line graph
-# superimpose with my reading speed (online reading speed)
-
-# compoare book marketing trends vs when i read them
-# properly capitilze words
