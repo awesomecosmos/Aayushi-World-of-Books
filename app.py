@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 import plotly.offline as pyo
 import streamlit as st  
 from pandas.api.types import is_categorical_dtype,is_datetime64_any_dtype,is_numeric_dtype,is_object_dtype
-from utils import *
+from code.utils import *
 
 st.title("Aayushi's World of Books :books: :sparkles:")
 
@@ -52,6 +52,7 @@ with tab2:
                 x='Year Read',
                 y='Title',
                 title='Total Books Read by Year',
+                color_discrete_sequence=['blueviolet'],
                 labels={
                     'Year Read':'Year Read',
                     'Title':'Total Books Read'}
@@ -63,6 +64,7 @@ with tab2:
         x='Original Publication Year', 
         y='Year Read',
         title='Year I Read Books vs Year Book was Published',
+        color_discrete_sequence=['blueviolet'],
         labels={
             'Year Read':'Year Read',
             'Original Publication Year':'Original Publication Year'}
