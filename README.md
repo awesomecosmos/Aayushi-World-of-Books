@@ -20,3 +20,9 @@ One of my motivations is Murph's bookshelf in Interstellar (2014), which played 
 ## My Actual Bookshelf
 
 Photo of my actual bookshelf coming soon!
+
+## Requirements
+
+Book Title, Author l-f, Additional Authors, ISBN-13, Number of Pages, Year Published, Year Read, My Genres, Fiction Status, My Tags, Ownership Status, To Buy
+
+Do this: re-create the Excel - re-order the columns as above, and merge Libby and Office books, then archive the data files, keep this new one, upload it to Notion, set the Zapier integration with Google Sheets, create the RShiny app, publish, voila!
