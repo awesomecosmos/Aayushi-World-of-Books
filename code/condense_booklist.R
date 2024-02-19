@@ -12,7 +12,10 @@ goodreads_library_export_csv_new <- goodreads_library_export_csv %>%
   mutate(
     `ISBN` = na_if(`ISBN`, ""),
     `Additional.Authors` = na_if(`Additional.Authors`, ""),
-    `Date.Read` = na_if(`Date.Read`, "")
+    `Date.Read` = na_if(`Date.Read`, ""),
+    `Date.Read` = ifelse(!is.na(`Date.Read`),
+                       format(as.Date(`Date.Read`, "%m/%d/%y"), "%m/%d/%Y"),
+                       NA)
   ) %>% 
   rename(
     "Author l-f" = "Author.l.f",
@@ -33,10 +36,6 @@ goodreads_library_export_csv_new <- goodreads_library_export_csv %>%
     `ISBN10` = as.character(`ISBN10`),
     `ISBN13` = as.character(`ISBN13`)
   ) %>% 
-  # mutate(
-  #   ISBN10 = ifelse(!is.na(ISBN10), format(as.character(ISBN10), scientific = FALSE), NA),
-  #   ISBN13 = ifelse(!is.na(ISBN13), format(as.character(ISBN13), scientific = FALSE), NA)
-  # ) %>%
   distinct()
 
 goodreads_library_export_xlsx_new <- goodreads_library_export_xlsx %>%
@@ -48,12 +47,11 @@ goodreads_library_export_xlsx_new <- goodreads_library_export_xlsx %>%
   ) %>% 
   mutate(
     `ISBN10` = as.character(`ISBN10`),
-    `ISBN13` = as.character(`ISBN13`)
+    `ISBN13` = as.character(`ISBN13`),
+    `Date Read` = ifelse(!is.na(`Date Read`), 
+                         format(as.POSIXct(`Date Read`, format = "%Y-%m-%d", tz = "UTC"), "%m/%d/%Y"),
+                         NA)
   ) %>% 
-  # mutate(
-  #   `ISBN10` = ifelse(!is.na(`ISBN10`), format(as.numeric(`ISBN10`), scientific = FALSE), NA),
-  #   `ISBN13` = ifelse(!is.na(`ISBN13`), format(as.numeric(`ISBN13`), scientific = FALSE), NA)
-  # ) %>%
   distinct()
 
 condense_goodreads <- rbind(
@@ -69,7 +67,6 @@ condense_goodreads <- rbind(
 libby_new <- libby %>%
   select(title, author, isbn, timestamp) %>%
   mutate(
-    # isbn = ifelse(!is.na(isbn), format(as.numeric(isbn), scientific = FALSE), NA),
     isbn = as.character(isbn),
     author = ifelse(!is.na(author),
       sapply(
@@ -91,7 +88,6 @@ libby_new <- libby %>%
     "Year Read" = as.numeric(substr(`Date Borrowed`, nchar(`Date Borrowed`) - 3, nchar(`Date Borrowed`)))
   ) %>%
   mutate(
-  #   `ISBN10` = as.character(`ISBN10`),
   `ISBN13` = as.character(`ISBN13`)
   ) %>%
   distinct()
@@ -99,10 +95,6 @@ libby_new <- libby %>%
 
 office_books_new <- office_books %>%
   rename("Title" = "Book Title", "ISBN13" = "ISBN-13", "ISBN10" = "ISBN-10") %>%
-  # mutate(
-  #   `ISBN10` = ifelse(!is.na(`ISBN10`), format(as.numeric(`ISBN10`), scientific = FALSE), NA),
-  #   `ISBN13` = ifelse(!is.na(`ISBN13`), format(as.numeric(`ISBN13`), scientific = FALSE), NA)
-  # ) %>%
   mutate(
     `ISBN10` = as.character(`ISBN10`),
     `ISBN13` = as.character(`ISBN13`)
@@ -124,10 +116,16 @@ simplified_booklist_csv_new <- simplified_booklist_csv %>%
     "Ownership Status" = "Ownership.Status",
     "Buy?" = "Buy."
   ) %>%
-  # mutate(
-  #   `ISBN10` = ifelse(!is.na(`ISBN10`), format(as.numeric(`ISBN10`), scientific = FALSE), NA),
-  #   `ISBN13` = ifelse(!is.na(`ISBN13`), format(as.numeric(`ISBN13`), scientific = FALSE), NA)
-  # ) %>%
+  mutate(
+    `Additional Authors` = na_if(`Additional Authors`, ""),
+    `ISBN10` = na_if(`ISBN10`, ""),
+    `Author l-f` = na_if(`Author l-f`, ""),
+    `User Genre` = na_if(`User Genre`, ""),
+    `Fiction Status` = na_if(`Fiction Status`, ""),
+    `User Tags` = na_if(`User Tags`, ""),
+    `Ownership Status` = na_if(`Ownership Status`, ""),
+    `Buy?` = na_if(`Buy?`, "")
+  ) %>% 
   mutate(
     `ISBN10` = as.character(`ISBN10`),
     `ISBN13` = as.character(`ISBN13`)
@@ -136,10 +134,6 @@ simplified_booklist_csv_new <- simplified_booklist_csv %>%
 
 simplified_booklist_xlsx_new <- simplified_booklist_xlsx %>%
   rename("Title" = "Book Title", "ISBN10" = "ISBN-10", "ISBN13" = "ISBN-13") %>%
-  # mutate(
-  #   `ISBN10` = ifelse(!is.na(`ISBN10`), format(as.numeric(`ISBN10`), scientific = FALSE), NA),
-  #   `ISBN13` = ifelse(!is.na(`ISBN13`), format(as.numeric(`ISBN13`), scientific = FALSE), NA)
-  # ) %>%
   mutate(
     `ISBN10` = as.character(`ISBN10`),
     `ISBN13` = as.character(`ISBN13`)
@@ -153,8 +147,28 @@ condense_simplified_booklist <- rbind(
   mutate(
     `ISBN10` = as.character(`ISBN10`),
     `ISBN13` = as.character(`ISBN13`)
-  ) %>% 
+  ) %>%
   distinct()
+
+# bind_rows(
+#   bind_cols(
+#     simplified_booklist_csv_new,
+#     tibble::tibble(
+#       `Date Borrowed` = NA, `Year Read` = NA, `User Genre` = NA,
+#       `Fiction Status` = NA, `User Tags` = NA, `Ownership Status` = NA,
+#       `Buy?` = NA
+#     )
+#   ),
+#   bind_cols(
+#     simplified_booklist_xlsx_new,
+#     tibble::tibble(
+#       `Date Borrowed` = NA, `Year Read` = NA, `User Genre` = NA,
+#       `Fiction Status` = NA, `User Tags` = NA, `Ownership Status` = NA,
+#       `Buy?` = NA
+#     )
+#   )
+# )
+
 # condense_goodreads
 # libby_new
 # office_books_new
