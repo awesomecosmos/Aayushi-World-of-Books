@@ -21,4 +21,5 @@ One of my motivations is Murph's bookshelf in Interstellar (2014), which played 
 
 ## My Actual Bookshelf
 
-Photo of my actual bookshelf coming soon!
+In Mar. 2024, here's what my bookshelf looks like! 
+<img src="assets/my_library_03-2024.jpeg">
