@@ -150,31 +150,17 @@ condense_simplified_booklist <- rbind(
   ) %>%
   distinct()
 
-# condense_goodreads
-# libby_new
-# office_books_new
-# condense_simplified_booklist
-
 # unique_titles1 <- unique(condense_goodreads$Title)
 unique_titles2 <- unique(condense_simplified_booklist$Title)
 
 all_column_names <- unique(
   c(
-    # colnames(condense_goodreads), 
     colnames(libby_new),
     colnames(office_books_new), colnames(condense_simplified_booklist)
   )
 )
 
 combined_data <- bind_rows(
-  # bind_cols(
-  #   condense_goodreads,
-  #   tibble::tibble(
-  #     `Date Borrowed` = NA, `Year Read` = NA, `User Genre` = NA,
-  #     `Fiction Status` = NA, `User Tags` = NA, `Ownership Status` = NA,
-  #     `Buy?` = NA
-  #   )
-  # ),
   bind_cols(
     libby_new,
     tibble::tibble(
@@ -201,3 +187,8 @@ combined_data <- bind_rows(
   )
 ) %>%
   distinct()
+
+write.csv(
+  combined_data,
+  "data/outputs/all_historical_data_combined.csv"
+)
